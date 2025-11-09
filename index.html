@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Namica – App Name Generator</title>
+<style>
+:root {
+    --bg-color: #e0e0e0;
+    --text-color: #333;
+    --card-bg: #e0e0e0;
+    --shadow-light: #ffffff;
+    --shadow-dark: #b8b9be;
+    --button-bg: #e0e0e0;
+}
+body.dark {
+    --bg-color: #1e1e1e;
+    --text-color: #f5f5f5;
+    --card-bg: #2a2a2a;
+    --shadow-light: #3a3a3a;
+    --shadow-dark: #121212;
+    --button-bg: #2a2a2a;
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    transition: background 0.3s, color 0.3s;
+}
+.container {
+    text-align: center;
+    padding: 35px;
+    width: 360px;
+    border-radius: 22px;
+    background: var(--card-bg);
+    box-shadow: 8px 8px 16px var(--shadow-dark),
+                -8px -8px 16px var(--shadow-light);
+    transition: all 0.3s ease;
+    position: relative;
+}
+h1 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-size: 14px;
+    font-weight: 500;
+}
+select, input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 12px;
+    border: none;
+    box-shadow: inset 4px 4px 8px var(--shadow-dark),
+                inset -4px -4px 8px var(--shadow-light);
+    background: var(--button-bg);
+    color: var(--text-color);
+    margin-bottom: 10px;
+    font-size: 14px;
+    outline: none;
+}
+.slider-container { margin: 10px 0; }
+input[type="range"] { width: 100%; }
+button {
+    background: var(--button-bg);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--text-color);
+    box-shadow: 4px 4px 8px var(--shadow-dark),
+                -4px -4px 8px var(--shadow-light);
+    transition: 0.3s;
+}
+button:hover {
+    box-shadow: inset 4px 4px 8px var(--shadow-dark),
+                inset -4px -4px 8px var(--shadow-light);
+}
+.output {
+    margin-top: 20px;
+    font-size: 22px;
+    font-weight: bold;
+    text-transform: capitalize;
+    min-height: 40px;
+    word-break: break-word;
+}
+.favorite-section {
+    margin-top: 15px;
+    background: var(--card-bg);
+    padding: 10px;
+    border-radius: 14px;
+    box-shadow: inset 4px 4px 8px var(--shadow-dark),
+                inset -4px -4px 8px var(--shadow-light);
+}
+.favorite-section h3 {
+    margin: 5px 0;
+    font-size: 16px;
+}
+.favorite-list div {
+    padding: 4px 0;
+    font-size: 14px;
+}
+footer {
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+.dark-toggle {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    background: var(--button-bg);
+    border-radius: 10px;
+    padding: 5px 8px;
+    box-shadow: 2px 2px 6px var(--shadow-dark),
+                -2px -2px 6px var(--shadow-light);
+}
+.row { display: flex; gap: 6px; margin-top: 6px; }
+.row button { flex: 1; }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="dark-toggle" onclick="toggleDarkMode()">🌙</div>
+    <h1>Namica</h1>
+
+    <label for="category">Select Category:</label>
+    <select id="category">
+        <option>Technology</option><option>Health</option><option>Finance</option>
+        <option>Education</option><option>Travel</option><option>Fashion</option>
+        <option>Food</option><option>Gaming</option><option>Music</option>
+        <option>Productivity</option><option>Social</option><option>Photography</option>
+        <option>Shopping</option><option>Sports</option><option>Environment</option>
+        <option>Science</option><option>Art</option><option>Business</option>
+        <option>Spiritual</option><option>Utility</option>
+    </select>
+
+    <label for="keyword">Enter Keyword (optional):</label>
+    <input type="text" id="keyword" placeholder="e.g., AI, Fit, Pay">
+
+    <div class="slider-container">
+        <label for="length">Name Length: <span id="lengthValue">8</span></label>
+        <input type="range" id="length" min="4" max="20" value="8">
+    </div>
+
+    <button onclick="generateName()">Generate Name</button>
+    <div class="output" id="output"></div>
+
+    <!-- Favorite Section -->
+    <div class="favorite-section">
+        <h3>Saved Names</h3>
+        <div class="favorite-list" id="favoriteList">No names saved yet.</div>
+        <div class="row">
+            <button onclick="saveName()">Save</button>
+            <button onclick="downloadNames()">Download</button>
+            <button onclick="clearNames()">Clear</button>
+        </div>
+    </div>
+
+    <footer>© Manik Roy 2025. All Rights Reserved.</footer>
+</div>
+
+<script>
+const prefixes = ["Neo","Tech","Smart","Omni","Inno","Next","Bright","Meta","Quick","Go","Ultra","Eco","Cyber","Astra","Pure","Gen","Snap","Blue","Nova","Aero"];
+const suffixes = ["ify","loop","sync","hub","core","ware","net","zone","craft","scape","nova","grid","verse","logic","path","rise","pulse","space","nity","byte"];
+let usedNames = new Set();
+let lastName = "";
+let savedNames = [];
+
+function cleanWord(word){ return word.replace(/[^a-zA-Z]/g,''); }
+
+function generateName() {
+    const category = cleanWord(document.getElementById('category').value);
+    const keywordInput = cleanWord(document.getElementById('keyword').value.trim());
+    const length = parseInt(document.getElementById('length').value);
+    const output = document.getElementById('output');
+    let name = "", tries = 0;
+
+    do {
+        const pre = prefixes[Math.floor(Math.random() * prefixes.length)];
+        const suf = suffixes[Math.floor(Math.random() * suffixes.length)];
+        let middle = "";
+
+        if(keywordInput){
+            middle = keywordInput.charAt(0).toUpperCase() + keywordInput.slice(1).toLowerCase();
+        } else {
+            middle = category.substring(0,3).toLowerCase();
+        }
+
+        name = pre + middle + suf;
+
+        if(name.length > length) name = name.slice(0,length);
+        else if(name.length < length) name += Math.random().toString(36).substring(2, 2 + (length - name.length));
+
+        name = name.charAt(0).toUpperCase() + name.slice(1);
+
+        tries++;
+    } while((usedNames.has(name) || name === lastName) && tries < 50);
+
+    usedNames.add(name);
+    lastName = name;
+    output.textContent = name;
+}
+
+// Save to favorites
+function saveName(){
+    const name = document.getElementById('output').textContent;
+    if(!name || name==="") return alert("Generate a name first!");
+    if(!savedNames.includes(name)){
+        savedNames.unshift(name);
+        updateFavoriteUI();
+    } else alert("Already saved!");
+}
+
+// Update UI
+function updateFavoriteUI(){
+    const list = document.getElementById('favoriteList');
+    if(savedNames.length===0){ list.textContent="No names saved yet."; return; }
+    list.innerHTML = savedNames.map(n=>`<div>${n}</div>`).join('');
+}
+
+// Clear favorites
+function clearNames(){ if(confirm("Clear all saved names?")){ savedNames=[]; updateFavoriteUI(); } }
+
+// Download favorites
+function downloadNames(){
+    if(savedNames.length===0) return alert("No names to download!");
+    const blob = new Blob([savedNames.join("\n")], {type:"text/plain"});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = "Namica_Names.txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
+// Update slider value
+document.getElementById('length').addEventListener('input', e => document.getElementById('lengthValue').textContent = e.target.value);
+
+// Dark mode toggle
+function toggleDarkMode(){
+    document.body.classList.toggle('dark');
+    const toggle = document.querySelector('.dark-toggle');
+    toggle.textContent = document.body.classList.contains('dark') ? "☀️" : "🌙";
+}
+</script>
+</body>
+</html>
