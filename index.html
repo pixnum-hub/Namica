@@ -3,257 +3,247 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Namica – App Name Generator</title>
+<title>Namica - Name Generator</title>
 <style>
 :root {
-    --bg-color: #e0e0e0;
-    --text-color: #333;
-    --card-bg: #e0e0e0;
-    --shadow-light: #ffffff;
-    --shadow-dark: #b8b9be;
-    --button-bg: #e0e0e0;
+  --bg: #e0e0e0;
+  --fg: #333;
+  --card: #e0e0e0;
+  --shadow-light: #ffffff;
+  --shadow-dark: #bebebe;
 }
 body.dark {
-    --bg-color: #1e1e1e;
-    --text-color: #f5f5f5;
-    --card-bg: #2a2a2a;
-    --shadow-light: #3a3a3a;
-    --shadow-dark: #121212;
-    --button-bg: #2a2a2a;
+  --bg: #1e1e1e;
+  --fg: #f5f5f5;
+  --card: #2c2c2c;
+  --shadow-light: #3a3a3a;
+  --shadow-dark: #121212;
 }
 body {
-    font-family: 'Poppins', sans-serif;
-    background: var(--bg-color);
-    color: var(--text-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-    transition: background 0.3s, color 0.3s;
+  font-family: "Poppins", sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  transition: background 0.3s, color 0.3s;
 }
 .container {
-    text-align: center;
-    padding: 35px;
-    width: 360px;
-    border-radius: 22px;
-    background: var(--card-bg);
-    box-shadow: 8px 8px 16px var(--shadow-dark),
-                -8px -8px 16px var(--shadow-light);
-    transition: all 0.3s ease;
-    position: relative;
+  background: var(--card);
+  box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light);
+  border-radius: 25px;
+  padding: 30px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s ease;
 }
 h1 {
-    font-size: 26px;
-    margin-bottom: 20px;
-    font-weight: 700;
+  font-size: 1.5em;
+  margin-bottom: 20px;
 }
 label {
-    display: block;
-    margin: 10px 0 5px;
-    font-size: 14px;
-    font-weight: 500;
+  display: block;
+  margin-top: 15px;
+  font-weight: 500;
 }
-select, input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border-radius: 12px;
-    border: none;
-    box-shadow: inset 4px 4px 8px var(--shadow-dark),
-                inset -4px -4px 8px var(--shadow-light);
-    background: var(--button-bg);
-    color: var(--text-color);
-    margin-bottom: 10px;
-    font-size: 14px;
-    outline: none;
+input, select {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--fg);
+  box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+  margin-top: 8px;
+  outline: none;
+  transition: 0.3s;
 }
-.slider-container { margin: 10px 0; }
-input[type="range"] { width: 100%; }
 button {
-    background: var(--button-bg);
-    border: none;
-    padding: 12px 20px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: bold;
-    color: var(--text-color);
-    box-shadow: 4px 4px 8px var(--shadow-dark),
-                -4px -4px 8px var(--shadow-light);
-    transition: 0.3s;
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--fg);
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+  transition: 0.3s;
 }
 button:hover {
-    box-shadow: inset 4px 4px 8px var(--shadow-dark),
-                inset -4px -4px 8px var(--shadow-light);
+  box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
 }
-.output {
-    margin-top: 20px;
-    font-size: 22px;
-    font-weight: bold;
-    text-transform: capitalize;
-    min-height: 40px;
-    word-break: break-word;
+.results {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
-.favorite-section {
-    margin-top: 15px;
-    background: var(--card-bg);
-    padding: 10px;
-    border-radius: 14px;
-    box-shadow: inset 4px 4px 8px var(--shadow-dark),
-                inset -4px -4px 8px var(--shadow-light);
+.name-box {
+  padding: 10px;
+  border-radius: 10px;
+  background: var(--card);
+  box-shadow: inset 2px 2px 5px var(--shadow-dark), inset -2px -2px 5px var(--shadow-light);
+  font-weight: 500;
 }
-.favorite-section h3 {
-    margin: 5px 0;
-    font-size: 16px;
-}
-.favorite-list div {
-    padding: 4px 0;
-    font-size: 14px;
+.toggle {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: var(--card);
+  box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 footer {
-    margin-top: 20px;
-    font-size: 12px;
-    color: var(--text-color);
-    opacity: 0.8;
+  margin-top: 25px;
+  font-size: 0.8em;
+  opacity: 0.8;
 }
-.dark-toggle {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    cursor: pointer;
-    font-size: 16px;
-    background: var(--button-bg);
-    border-radius: 10px;
-    padding: 5px 8px;
-    box-shadow: 2px 2px 6px var(--shadow-dark),
-                -2px -2px 6px var(--shadow-light);
-}
-.row { display: flex; gap: 6px; margin-top: 6px; }
-.row button { flex: 1; }
 </style>
 </head>
 <body>
 <div class="container">
-    <div class="dark-toggle" onclick="toggleDarkMode()">🌙</div>
-    <h1>Namica</h1>
+  <div class="toggle" id="darkModeToggle">🌙</div>
+  <h1>Namica</h1>
 
-    <label for="category">Select Category:</label>
-    <select id="category">
-        <option>Technology</option><option>Health</option><option>Finance</option>
-        <option>Education</option><option>Travel</option><option>Fashion</option>
-        <option>Food</option><option>Gaming</option><option>Music</option>
-        <option>Productivity</option><option>Social</option><option>Photography</option>
-        <option>Shopping</option><option>Sports</option><option>Environment</option>
-        <option>Science</option><option>Art</option><option>Business</option>
-        <option>Spiritual</option><option>Utility</option>
-    </select>
+  <label for="keyword">Keyword</label>
+  <input type="text" id="keyword" placeholder="Enter keyword">
 
-    <label for="keyword">Enter Keyword (optional):</label>
-    <input type="text" id="keyword" placeholder="e.g., AI, Fit, Pay">
+  <label for="style">Name Style</label>
+  <select id="style">
+    <option>Brandable</option>
+    <option>Evocative</option>
+    <option>Short Phrase</option>
+    <option>Compound Words</option>
+    <option>Alternate Spelling</option>
+    <option>Non-English</option>
+    <option>Real Words</option>
+  </select>
 
-    <div class="slider-container">
-        <label for="length">Name Length: <span id="lengthValue">8</span></label>
-        <input type="range" id="length" min="4" max="20" value="8">
-    </div>
+  <label for="niche">Niche Type</label>
+  <select id="niche">
+    <option>Business</option><option>Technology</option><option>Education</option>
+    <option>Health & Fitness</option><option>Fashion</option><option>Food & Beverage</option>
+    <option>Finance</option><option>Real Estate</option><option>Entertainment</option>
+    <option>E-commerce</option><option>Gaming</option><option>Automotive</option>
+    <option>Beauty & Personal Care</option><option>Sports</option><option>Art & Design</option>
+    <option>Music</option><option>News & Media</option><option>Agriculture</option>
+    <option>Environment</option><option>Spiritual / Mindfulness</option>
+    <option>AI & Machine Learning</option><option>Marketing & Advertising</option>
+    <option>Social Networking</option><option>Pets & Animals</option>
+  </select>
 
-    <button onclick="generateName()">Generate Name</button>
-    <div class="output" id="output"></div>
+  <label for="length">Name Length (characters)</label>
+  <input type="number" id="length" min="3" max="12" value="6">
 
-    <!-- Favorite Section -->
-    <div class="favorite-section">
-        <h3>Saved Names</h3>
-        <div class="favorite-list" id="favoriteList">No names saved yet.</div>
-        <div class="row">
-            <button onclick="saveName()">Save</button>
-            <button onclick="downloadNames()">Download</button>
-            <button onclick="clearNames()">Clear</button>
-        </div>
-    </div>
+  <button id="generateBtn">Generate Names</button>
+  <button id="moreBtn">Generate More</button>
+  <button id="copyBtn">Copy All</button>
+  <button id="resetBtn">Reset All</button>
 
-    <footer>© Manik Roy 2025. All Rights Reserved.</footer>
+  <div class="results" id="results"></div>
+
+  <footer>© Manik Roy 2025. All Rights Reserved.</footer>
 </div>
 
 <script>
-const prefixes = ["Neo","Tech","Smart","Omni","Inno","Next","Bright","Meta","Quick","Go","Ultra","Eco","Cyber","Astra","Pure","Gen","Snap","Blue","Nova","Aero"];
-const suffixes = ["ify","loop","sync","hub","core","ware","net","zone","craft","scape","nova","grid","verse","logic","path","rise","pulse","space","nity","byte"];
-let usedNames = new Set();
-let lastName = "";
-let savedNames = [];
+const darkToggle = document.getElementById("darkModeToggle");
+darkToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  darkToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+});
 
-function cleanWord(word){ return word.replace(/[^a-zA-Z]/g,''); }
+const generateBtn = document.getElementById("generateBtn");
+const moreBtn = document.getElementById("moreBtn");
+const copyBtn = document.getElementById("copyBtn");
+const resetBtn = document.getElementById("resetBtn");
+const results = document.getElementById("results");
 
-function generateName() {
-    const category = cleanWord(document.getElementById('category').value);
-    const keywordInput = cleanWord(document.getElementById('keyword').value.trim());
-    const length = parseInt(document.getElementById('length').value);
-    const output = document.getElementById('output');
-    let name = "", tries = 0;
+const nicheTone = {
+  "Business":["pro","val","zen","sol","ment"],
+  "Technology":["tech","tron","bit","code","sys","net"],
+  "Education":["edu","learn","wis","logy","ment"],
+  "Health & Fitness":["fit","vita","zen","bio","core"],
+  "Fashion":["glam","moda","sty","lux","elle"],
+  "Food & Beverage":["yum","taste","del","cook","brew"],
+  "Finance":["fin","cred","val","bank","inv"],
+  "E-commerce":["shop","cart","deal","buy","mart"],
+  "Gaming":["play","win","game","blast","arena"],
+  "Automotive":["auto","car","mot","drive","gear"],
+  "Beauty & Personal Care":["glow","skin","pure","shine","ess"],
+  "Sports":["run","fit","goal","kick","race"],
+  "Art & Design":["art","form","pix","draw","color"],
+  "Music":["beat","note","mel","tone","vox"],
+  "Real Estate":["home","nest","prop","villa","land"],
+  "Agriculture":["farm","grow","seed","crop","agro"],
+  "Environment":["eco","green","earth","bio","nature"],
+  "Spiritual / Mindfulness":["soul","zen","aura","om","mind"],
+  "AI & Machine Learning":["ai","syn","neu","bot","gen"],
+  "Marketing & Advertising":["brand","buzz","promo","reach","adv"],
+  "Social Networking":["chat","link","net","meet","tribe"],
+  "Pets & Animals":["paw","pet","fur","tail","zoon"],
+  "Entertainment":["fun","show","flix","pop","jam"]
+};
 
-    do {
-        const pre = prefixes[Math.floor(Math.random() * prefixes.length)];
-        const suf = suffixes[Math.floor(Math.random() * suffixes.length)];
-        let middle = "";
-
-        if(keywordInput){
-            middle = keywordInput.charAt(0).toUpperCase() + keywordInput.slice(1).toLowerCase();
-        } else {
-            middle = category.substring(0,3).toLowerCase();
-        }
-
-        name = pre + middle + suf;
-
-        if(name.length > length) name = name.slice(0,length);
-        else if(name.length < length) name += Math.random().toString(36).substring(2, 2 + (length - name.length));
-
-        name = name.charAt(0).toUpperCase() + name.slice(1);
-
-        tries++;
-    } while((usedNames.has(name) || name === lastName) && tries < 50);
-
-    usedNames.add(name);
-    lastName = name;
-    output.textContent = name;
+function cleanDoubleLetters(str){
+  return str.replace(/([a-z])\1+/gi, '$1');
 }
 
-// Save to favorites
-function saveName(){
-    const name = document.getElementById('output').textContent;
-    if(!name || name==="") return alert("Generate a name first!");
-    if(!savedNames.includes(name)){
-        savedNames.unshift(name);
-        updateFavoriteUI();
-    } else alert("Already saved!");
+function generateName(keyword, style, niche, length){
+  const syllables=["a","e","i","o","u","ba","be","bi","bo","bu","ca","co","da","de","di","do","du","la","lo","lu","na","no","ra","ro","ru","ta","to","tu","za","zo","zu"];
+  const tone = nicheTone[niche] || [];
+  const key = keyword.toLowerCase();
+  let parts=[...tone,...syllables];
+  if(key.length>0) parts.push(key.slice(0,3));
+  let name="";
+  while(name.length<length){
+    name += parts[Math.floor(Math.random()*parts.length)];
+  }
+  name = cleanDoubleLetters(name);
+  name = name.charAt(0).toUpperCase() + name.slice(1,length);
+  return name.slice(0,length);
 }
 
-// Update UI
-function updateFavoriteUI(){
-    const list = document.getElementById('favoriteList');
-    if(savedNames.length===0){ list.textContent="No names saved yet."; return; }
-    list.innerHTML = savedNames.map(n=>`<div>${n}</div>`).join('');
+function generateAll(){
+  results.innerHTML="";
+  const keyword=document.getElementById("keyword").value.trim();
+  const style=document.getElementById("style").value;
+  const niche=document.getElementById("niche").value;
+  const length=parseInt(document.getElementById("length").value);
+  for(let i=0;i<10;i++){
+    const n=generateName(keyword,style,niche,length);
+    const div=document.createElement("div");
+    div.className="name-box";
+    div.textContent=n;
+    results.appendChild(div);
+  }
 }
 
-// Clear favorites
-function clearNames(){ if(confirm("Clear all saved names?")){ savedNames=[]; updateFavoriteUI(); } }
-
-// Download favorites
-function downloadNames(){
-    if(savedNames.length===0) return alert("No names to download!");
-    const blob = new Blob([savedNames.join("\n")], {type:"text/plain"});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = "Namica_Names.txt";
-    a.click();
-    URL.revokeObjectURL(a.href);
-}
-
-// Update slider value
-document.getElementById('length').addEventListener('input', e => document.getElementById('lengthValue').textContent = e.target.value);
-
-// Dark mode toggle
-function toggleDarkMode(){
-    document.body.classList.toggle('dark');
-    const toggle = document.querySelector('.dark-toggle');
-    toggle.textContent = document.body.classList.contains('dark') ? "☀️" : "🌙";
-}
+generateBtn.addEventListener("click",generateAll);
+moreBtn.addEventListener("click",generateAll);
+copyBtn.addEventListener("click",()=>{
+  const names=[...document.querySelectorAll(".name-box")].map(e=>e.textContent).join(", ");
+  navigator.clipboard.writeText(names);
+  alert("Copied all names!");
+});
+resetBtn.addEventListener("click",()=>{
+  document.getElementById("keyword").value="";
+  document.getElementById("style").selectedIndex=0;
+  document.getElementById("niche").selectedIndex=0;
+  document.getElementById("length").value=6;
+  results.innerHTML="";
+});
 </script>
 </body>
 </html>
